@@ -6,6 +6,7 @@ dependencies:
 - numpy
 - rdkit
 - scikit-learn
+- ipykernel
 - pandas
 - pip
 - pip:
