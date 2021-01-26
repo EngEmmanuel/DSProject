@@ -4,6 +4,7 @@ channels:
 dependencies:
 - python >= 3.8
 - numpy
+- rdkit
 - scikit-learn
 - pandas
 - pip
