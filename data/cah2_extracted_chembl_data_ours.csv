@@ -1,3 +1,4 @@
+standard_relation,standard_value,standard_units,standard_type,pchembl_value,data_validity_comment,potential_duplicate,chembl_id,assay_type,description,canonical_smiles,chembl_id:1
 =,0.01,nM,Ki,11,,0,CHEMBL3610378,B,Inhibition of human recombinant carbonic anhydrase 2 preincubated for 15 mins by stopped flow CO2 hydration method,COc1ccc(-c2cnc(C(=O)N3CCCC3)o2)cc1S(N)(=O)=O,CHEMBL3608883
 =,0.01,nM,Ki,11,,0,CHEMBL3610378,B,Inhibition of human recombinant carbonic anhydrase 2 preincubated for 15 mins by stopped flow CO2 hydration method,Cc1ccc(-c2cnc(C(=O)N3CCCC3)o2)cc1S(N)(=O)=O,CHEMBL3608881
 =,0.01,nM,Ki,11,,0,CHEMBL3610378,B,Inhibition of human recombinant carbonic anhydrase 2 preincubated for 15 mins by stopped flow CO2 hydration method,Cc1ncc(-c2csc(S(N)(=O)=O)c2)o1,CHEMBL3608890
