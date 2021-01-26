@@ -1,0 +1,13 @@
+name: DSProjectEnv
+channels:
+- conda-forge
+dependencies:
+- python >= 3.8
+- numpy
+- scikit-learn
+- pandas
+- pip
+- pip:
+  - matplotlib
+  - ggplot
+  - plotnine
