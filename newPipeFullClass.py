@@ -18,10 +18,17 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 # Read in data
 
-file_name = 'cah2_chembl_data_with_features-rdkit-Morgan_FP.csv' #'cah2_dude_data_plus_rdkit_descriptors.csv'
+file_name = 'cah2_dude_data_with_features-rdkit-Morgan_FP.csv' #'cah2_dude_data_plus_rdkit_descriptors.csv'
 df = pd.read_csv(os.path.join('data',file_name))
-df.drop_duplicates(subset=['molecule_chembl_id'], keep=False, inplace=True)
-df.set_index('molecule_chembl_id', inplace=True)
+df.drop_duplicates(subset=['uniquekey'], keep=False, inplace=True)
+df.set_index('uniquekey', inplace=True)
+df.drop(['target_chembl_id','dude_name'])
+target = df.columns[0]
+y = df.pop(target).to_numpy()
+X = df.to_numpy()
+print(X.shape, y.shape, sep='\t')
+
+
 df = df._get_numeric_data().dropna()
 
 
