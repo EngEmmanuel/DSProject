@@ -92,6 +92,14 @@ for feature in range(max_features,max_features+1):
 
 np.save('featureRes.npy',featureRes)
 
+ylr_pred = pipelines[0].predict(X_test)
+ygb_pred = pipelines[1].predict(X_test)
+yrfr_pred = pipelines[2].predict(X_test)
+
+np.savetxt("try_ygb_pred.csv", ygb_pred,delimiter= "\t")
+np.savetxt("try_yrfr_pred.csv", yrfr_pred,delimiter= "\t")
+np.savetxt("try_ylr_pred.csv", ylr_pred,delimiter= "\t")
+np.savetxt("try_y_test.csv",y_test,delimiter= '\'t')
 
 # %%
 y = []
@@ -136,14 +144,7 @@ print('Finshed gradient boost fit')
 best_rfr_model = rfrsearch.fit(X_train,y_train)
 
 # Correlation plots
-ylr_pred = pipelines[0].predict(X_test)
-ygb_pred = best_gb_model.predict(X_test)
-yrfr_pred = best_rfr_model.predict(X_test)
 
-np.savetxt("cah2_ygb_pred.csv", ygb_pred,delimiter= "\t")
-np.savetxt("cah2_yrfr_pred.csv", yrfr_pred,delimiter= "\t")
-np.savetxt("cah2_ylr_pred.csv", ylr_pred,delimiter= "\t")
-np.savetxt("cah2_y_test.csv",y_test,delimiter= '\'t')
 
 plt.scatter(y_test,ylr_pred)
 plt.scatter(y_test,yrfr_pred)
