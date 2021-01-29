@@ -6,6 +6,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 import time
+from scipy.stats import pearsonr, spearmanr
 from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -133,6 +134,23 @@ rfrsearch = RandomizedSearchCV(pipelines[2], grid_param_rfr, n_iter= 50, cv = 3,
 best_gb_model = gbsearch.fit(X_train,y_train)
 print('Finshed gradient boost fit')
 best_rfr_model = rfrsearch.fit(X_train,y_train)
+
+# Correlation plots
+ygb_pred = best_gb_model.predict(X_test)
+yrfr_pred = best_rfr_model.predict(X_test)
+
+np.savetxt("ygb_pred.csv", ygb_pred,delimiter= "\t")
+np.savetxt("yrfr_pred.csv", yrfr_pred,delimiter= "\t")
+np.savetxt("y_test.csv",y_test,delimiter= '\'t')
+
+plt.scatter(y_test,ygb_pred)
+
+gb_pcorr, _ = pearsonr(y_test,ygb_pred)
+gb_scorr, _ = spearmanr(y_test, ygb_pred)
+rfr_pcorr, _ = spearmanr(y_test,yrfr_pred)
+rfr_scorr, _ = pearsonr(y_test,yrfr_pred)
+
+
 
 print("The mean accuracy of the gb model is:",best_gb_model.score(X_test,y_test))
 print("The mean accuracy of the rfr model is:",best_rfr_model.score(X_test,y_test))
