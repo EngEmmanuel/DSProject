@@ -18,7 +18,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 # Read in data
 
-file_name = 'cah2_dude_data_plus_rdkit_descriptors.csv'
+file_name = 'cah2_chembl_data_with_features-rdkit-Morgan_FP.csv' #'cah2_dude_data_plus_rdkit_descriptors.csv'
 df = pd.read_csv(os.path.join('data',file_name))
 df.drop_duplicates(subset=['molecule_chembl_id'], keep=False, inplace=True)
 df.set_index('molecule_chembl_id', inplace=True)
@@ -54,7 +54,7 @@ def get_pipelines(features):
 
 # %%
 
-max_features = 1
+max_features = 200
 featureRes = {}
 for feature in range(max_features,max_features+1):
 
@@ -110,8 +110,8 @@ for k in range(len(pipelines)):
 
 # %%
 
-optFeatures = [ y[i].index(max(y[i])) + 1 for i in range(3)]
-[p_lr, p_gb, p_rfr] = get_pipelines(optFeatures)
+#optFeatures = [ y[i].index(max(y[i])) + 1 for i in range(3)]
+#[p_lr, p_gb, p_rfr] = get_pipelines(optFeatures)
 
 grid_param_rfr = {
                  "rfr_reg__n_estimators": [10, 100, 1000],
@@ -121,16 +121,17 @@ grid_param_rfr = {
 
 grid_param_gb =  {
                  "gb_reg__n_estimators": [10, 100, 1000],
-                 "gb_reg__learning_rate":[0.5,0.8,0.25,None],
+                 "gb_reg__learning_rate":[0.5,0.8,0.25],
                  "gb_reg__min_samples_leaf":[1,2,5,15,100],
                  "gb_reg__max_leaf_nodes": [2,5,10]}
 
-gbsearch = RandomizedSearchCV(p_gb, grid_param_gb, n_iter= 1, cv = 3,verbose=2, n_jobs=-1)
-rfrsearch = RandomizedSearchCV(p_rfr, grid_param_rfr, n_iter= 1, cv = 3,verbose=2, n_jobs=-1)
+print('Starting randomised search')
+gbsearch = RandomizedSearchCV(pipelines[1], grid_param_gb, n_iter= 50, cv = 3,verbose=2, n_jobs=-1)
+rfrsearch = RandomizedSearchCV(pipelines[2], grid_param_rfr, n_iter= 50, cv = 3,verbose=2, n_jobs=-1)
 
 
 best_gb_model = gbsearch.fit(X_train,y_train)
-
+print('Finshed gradient boost fit')
 best_rfr_model = rfrsearch.fit(X_train,y_train)
 
 print("The mean accuracy of the gb model is:",best_gb_model.score(X_test,y_test))
